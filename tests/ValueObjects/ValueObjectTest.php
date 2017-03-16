@@ -18,9 +18,9 @@ class ValueObjectTest extends PHPUnit_Framework_TestCase
     {
         $expected = 'an object value';
 
-        $test = new StubValueObject($expected);
+        $valueObject = new StubValueObject($expected);
 
-        $this->assertSame($expected, (string) $test);
+        $this->assertSame($expected, (string) $valueObject);
     }
 
     /**
@@ -30,10 +30,10 @@ class ValueObjectTest extends PHPUnit_Framework_TestCase
     {
         $expected = 'a value';
 
-        $test = new StubValueObject($expected);
+        $valueObject = new StubValueObject($expected);
 
-        $this->assertTrue($test->is($expected));
-        $this->assertFalse($test->is('another value'));
+        $this->assertTrue($valueObject->is($expected));
+        $this->assertFalse($valueObject->is('another value'));
     }
     /**
      * @covers ::isNot
@@ -42,10 +42,10 @@ class ValueObjectTest extends PHPUnit_Framework_TestCase
     {
         $expected = 'a value';
 
-        $test = new StubValueObject($expected);
+        $valueObject = new StubValueObject($expected);
 
-        $this->assertTrue($test->isNot('another value'));
-        $this->assertFalse($test->isNot($expected));
+        $this->assertTrue($valueObject->isNot('another value'));
+        $this->assertFalse($valueObject->isNot($expected));
     }
 }
 
