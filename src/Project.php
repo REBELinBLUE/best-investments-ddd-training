@@ -6,21 +6,31 @@ use App\ValueObjects\ClientIdentifer;
 use App\ValueObjects\ManagerIdentifer;
 use App\ValueObjects\ProjectReference;
 use App\ValueObjects\ProjectStatus;
+use App\ValueObjects\SpecialistIdentifer;
 use DateTime;
 use Illuminate\Support\Collection;
 
 class Project
 {
+    /** @var string */
     private $name;
+
+    /** @var DateTime */
     private $deadline;
+
+    /** @var ProjectReference */
     private $reference;
+
+    /** @var ClientIdentifer */
     private $clientId;
+
+    /** @var ProjectStatus */
     private $status;
+
+    /** @var ManagerIdentifer */
     private $managerId;
 
-    /**
-     * @var Collection
-     */
+    /** @var Collection */
     private $specialists;
 
     private function __construct(string $name, DateTime $deadline, ClientIdentifer $clientId)
@@ -62,4 +72,40 @@ class Project
 
         $this->specialists->push($specialistId);
     }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function getDeadline(): DateTime
+    {
+        return $this->deadline;
+    }
+
+    public function getClientId(): ClientIdentifer
+    {
+        return $this->clientId;
+    }
+
+    public function getStatus(): ProjectStatus
+    {
+        return $this->status;
+    }
+
+    public function getManagerId(): ManagerIdentifer
+    {
+        return $this->managerId;
+    }
+
+    public function getReference(): ProjectReference
+    {
+        return $this->reference;
+    }
+
+    public function getSpecialists(): Collection
+    {
+        return $this->specialists;
+    }
+
 }

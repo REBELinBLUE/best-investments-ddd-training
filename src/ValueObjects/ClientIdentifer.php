@@ -2,17 +2,7 @@
 
 namespace App\ValueObjects;
 
-class ClientIdentifer
+class ClientIdentifer extends ValueObject
 {
-    private $id;
 
-    public function __construct(int $identifer)
-    {
-        $this->id = $identifer;
-    }
-
-    public function __toString(): string
-    {
-        return $this->id;
-    }
 }
