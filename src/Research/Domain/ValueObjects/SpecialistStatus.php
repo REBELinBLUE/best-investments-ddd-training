@@ -1,9 +1,12 @@
 <?php
 
-namespace App\ValueObjects;
+namespace App\Research\Domain\ValueObjects;
 
-class SpecialistStatus extends ValueObject
+class SpecialistStatus
 {
+    private $status;
+
+    //FIXME
     const PROSPECT = 'prospect';
     const APPROVED = 'approved';
     const DISCARDED = 'discarded';
@@ -18,6 +21,21 @@ class SpecialistStatus extends ValueObject
             throw new \RuntimeException("Invalid status {$status}");
         }
 
-        parent::__construct($status);
+        $this->status = $status;
+    }
+
+    public function is($status): bool
+    {
+        return ($this->status === $status);
+    }
+
+    public function isNot($status): bool
+    {
+        return !$this->is($status);
+    }
+
+    public function __toString(): string
+    {
+        return $this->status;
     }
 }

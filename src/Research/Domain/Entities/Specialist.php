@@ -1,9 +1,9 @@
 <?php
 
-namespace App;
+namespace App\Research\Domain\Entities;
 
-use App\ValueObjects\SpecialistIdentifer;
-use App\ValueObjects\SpecialistStatus;
+use App\Research\Domain\ValueObjects\SpecialistIdentifer;
+use App\Research\Domain\ValueObjects\SpecialistStatus;
 
 class Specialist
 {

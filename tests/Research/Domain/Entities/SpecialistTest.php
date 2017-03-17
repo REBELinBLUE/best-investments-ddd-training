@@ -1,11 +1,11 @@
 <?php
 
-use App\Specialist;
-use App\ValueObjects\SpecialistIdentifer;
-use App\ValueObjects\SpecialistStatus;
+use App\Research\Domain\Entities\Specialist;
+use App\Research\Domain\ValueObjects\SpecialistIdentifer;
+use App\Research\Domain\ValueObjects\SpecialistStatus;
 
 /**
- * @coversDefaultClass \App\Specialist
+ * @coversDefaultClass \App\Research\Domain\Entities\Specialist
  */
 class SpecialistTest extends PHPUnit_Framework_TestCase
 {

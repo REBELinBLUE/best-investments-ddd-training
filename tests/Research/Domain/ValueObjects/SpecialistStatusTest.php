@@ -2,12 +2,12 @@
 
 namespace ValueObjects;
 
-use App\ValueObjects\SpecialistStatus;
+use App\Research\Domain\ValueObjects\SpecialistStatus;
 use PHPUnit_Framework_TestCase;
 use RuntimeException;
 
 /**
- * @coversDefaultClass \App\ValueObjects\SpecialistStatus
+ * @coversDefaultClass \App\Research\Domain\ValueObjects\SpecialistStatus
  */
 class SpecialistStatusTest extends PHPUnit_Framework_TestCase
 {

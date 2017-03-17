@@ -1,16 +1,15 @@
 <?php
 
-use App\ValueObjects\ClientIdentifer;
-use App\ValueObjects\ManagerIdentifer;
-use App\ValueObjects\ProjectReference;
-use App\ValueObjects\ProjectStatus;
-use App\ValueObjects\SpecialistIdentifer;
+use App\Research\Domain\ValueObjects\ClientIdentifer;
+use App\Research\Domain\ValueObjects\ManagerIdentifer;
+use App\Research\Domain\ValueObjects\ProjectReference;
+use App\Research\Domain\ValueObjects\ProjectStatus;
+use App\Research\Domain\ValueObjects\SpecialistIdentifer;
+use App\Research\Domain\Entities\Project;
 use Illuminate\Support\Collection;
-use Mockery as m;
-use App\Project;
 
 /**
- * @coversDefaultClass \App\Project
+ * @coversDefaultClass \App\Research\Domain\Entities\Project
  */
 class ProjectTest extends PHPUnit_Framework_TestCase
 {

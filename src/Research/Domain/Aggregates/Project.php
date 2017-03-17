@@ -1,12 +1,12 @@
 <?php
 
-namespace App;
+namespace App\Research\Domain\Entities;
 
-use App\ValueObjects\ClientIdentifer;
-use App\ValueObjects\ManagerIdentifer;
-use App\ValueObjects\ProjectReference;
-use App\ValueObjects\ProjectStatus;
-use App\ValueObjects\SpecialistIdentifer;
+use App\Research\Domain\ValueObjects\ClientIdentifer;
+use App\Research\Domain\ValueObjects\ManagerIdentifer;
+use App\Research\Domain\ValueObjects\ProjectReference;
+use App\Research\Domain\ValueObjects\ProjectStatus;
+use App\Research\Domain\ValueObjects\SpecialistIdentifer;
 use DateTime;
 use Illuminate\Support\Collection;
 
