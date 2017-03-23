@@ -72,40 +72,4 @@ class Project
 
         $this->specialists->push($specialistId);
     }
-
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    public function getDeadline(): DateTime
-    {
-        return $this->deadline;
-    }
-
-    public function getClientId(): ClientIdentifer
-    {
-        return $this->clientId;
-    }
-
-    public function getStatus(): ProjectStatus
-    {
-        return $this->status;
-    }
-
-    public function getManagerId(): ManagerIdentifer
-    {
-        return $this->managerId;
-    }
-
-    public function getReference(): ProjectReference
-    {
-        return $this->reference;
-    }
-
-    public function getSpecialists(): Collection
-    {
-        return $this->specialists;
-    }
-
 }
