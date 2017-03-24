@@ -1,27 +1,26 @@
 <?php
 
-namespace App\Research\Domain\ValueObjects;
+namespace BestInvestments\Research\Domain\ValueObjects;
 
 class SpecialistStatus
 {
-    private $status;
-
-    //FIXME
-    const PROSPECT = 'prospect';
-    const APPROVED = 'approved';
+    const UNKNOWN   = 'unknown';
+    const APPROVED  = 'approved';
     const DISCARDED = 'discarded';
-    const INTERESTED = 'interested';
-    const NOT_INTERESTED = 'not_interested';
+    private $status;
 
     public function __construct(string $status)
     {
-        if (!in_array($status, [
-            self::PROSPECT, self::INTERESTED, self::NOT_INTERESTED, self::APPROVED, self::DISCARDED
-        ])) {
+        if (!in_array($status, [self::UNKNOWN, self::APPROVED, self::DISCARDED], true)) {
             throw new \RuntimeException("Invalid status {$status}");
         }
 
         $this->status = $status;
+    }
+
+    public function __toString(): string
+    {
+        return $this->status;
     }
 
     public function is($status): bool
@@ -32,10 +31,5 @@ class SpecialistStatus
     public function isNot($status): bool
     {
         return !$this->is($status);
-    }
-
-    public function __toString(): string
-    {
-        return $this->status;
     }
 }

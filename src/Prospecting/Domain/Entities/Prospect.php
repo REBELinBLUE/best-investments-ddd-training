@@ -1,27 +1,28 @@
 <?php
 
-namespace App\Prospecting\Domain\Entities;
+namespace BestInvestments\Prospecting\Domain\Entities;
 
-use App\Prospecting\Domain\ValueObjects\ProspectStatus;
+use BestInvestments\Prospecting\Domain\ValueObjects\ProspectIdentifier;
+use BestInvestments\Prospecting\Domain\ValueObjects\ProspectStatus;
 
 class Prospect
 {
-    /** @var PotentialSpecialist */
-    private $potentialSpecialist;
+    /** @var ProspectIdentifier */
+    private $prospectIdentifier;
 
     /** @var ProspectStatus */
     private $status;
 
-    public function __construct(PotentialSpecialist $potentialSpecialist)
+    public function __construct(ProspectIdentifier $prospectIdentifier)
     {
-        $this->potentialSpecialist = $potentialSpecialist;
-        $this->status              = new ProspectStatus(ProspectStatus::UNKNOWN);
+        $this->prospectIdentifier = $prospectIdentifier;
+        $this->status             = new ProspectStatus(ProspectStatus::UNKNOWN);
     }
 
     public function interested()
     {
         if ($this->status->isNot(ProspectStatus::UNKNOWN)) {
-            throw new \RuntimeException("Prospects can not be interested if they are not currently unknown");
+            throw new \RuntimeException('Prospects can not be interested if they are not currently unknown');
         }
 
         $this->status = new ProspectStatus(ProspectStatus::INTERESTED);
@@ -30,7 +31,7 @@ class Prospect
     public function notInterested()
     {
         if ($this->status->isNot(ProspectStatus::UNKNOWN)) {
-            throw new \RuntimeException("Prospects can not be not interested if they are not currently unknown");
+            throw new \RuntimeException('Prospects can not be not interested if they are not currently unknown');
         }
 
         $this->status = new ProspectStatus(ProspectStatus::NOT_INTERESTED);

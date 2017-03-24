@@ -1,31 +1,27 @@
 <?php
 
-namespace App\Research\Domain\Entities;
+namespace BestInvestments\Research\Domain\Entities;
 
-use App\Research\Domain\ValueObjects\SpecialistIdentifer;
-use App\Research\Domain\ValueObjects\SpecialistStatus;
+use BestInvestments\Research\Domain\ValueObjects\SpecialistIdentifier;
+use BestInvestments\Research\Domain\ValueObjects\SpecialistStatus;
 
 class Specialist
 {
-    private $id;
+    private $identifier;
     private $status;
-    private $accepted_terms;
+    private $acceptedTerms;
 
-    private function __construct(SpecialistIdentifer $identifer)
+    private function __construct(SpecialistIdentifier $identifier)
     {
-        $this->id = $identifer;
-        $this->accepted_terms = false;
-    }
-
-    public static function prospect()
-    {
-        return new Specialist(new SpecialistIdentifer(1234));
+        $this->identifier             = $identifier;
+        $this->acceptedTerms          = false;
+        $this->status                 = new SpecialistStatus(SpecialistStatus::UNKNOWN);
     }
 
     public function approve()
     {
-        if ($this->status->isNot(SpecialistStatus::PROSPECT)) {
-            throw new \RuntimeException("Specialist can not be approved if it is not a prospect");
+        if ($this->status->isNot(SpecialistStatus::UNKNOWN)) {
+            throw new \RuntimeException('Specialist can not be discarded if it has already been approved or discarded');
         }
 
         $this->status = new SpecialistStatus(SpecialistStatus::APPROVED);
@@ -33,25 +29,10 @@ class Specialist
 
     public function discard()
     {
-        if ($this->status->isNot(SpecialistStatus::PROSPECT)) {
-            throw new \RuntimeException("Specialist can not be discarded if it is not a prospect");
+        if ($this->status->isNot(SpecialistStatus::UNKNOWN)) {
+            throw new \RuntimeException('Specialist can not be discarded if it has already been approved or discarded');
         }
 
         $this->status = new SpecialistStatus(SpecialistStatus::DISCARDED);
-    }
-
-    public function getId(): SpecialistIdentifer
-    {
-        return $this->id;
-    }
-
-    public function getStatus(): SpecialistStatus
-    {
-        return $this->status;
-    }
-
-    public function isAcceptedTerms(): bool
-    {
-        return $this->accepted_terms;
     }
 }

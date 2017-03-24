@@ -1,17 +1,18 @@
 <?php
 
-namespace BestInvestments\Prospecting\Domain\ValueObjects;
+namespace BestInvestments\Research\Domain\ValueObjects;
 
-class ProspectStatus
+class ConsultationStatus
 {
-    const UNKNOWN        = 'unknown';
-    const INTERESTED     = 'interested';
-    const NOT_INTERESTED = 'not_interested';
+    const OPENED    = 'opened';
+    const DISCARDED = 'disgarded';
+    const CONFIRMED = 'confirmed';
+
     private $status;
 
     public function __construct(string $status)
     {
-        if (!in_array($status, [self::INTERESTED, self::NOT_INTERESTED], true)) {
+        if (!in_array($status, [self::OPENED, self::DISCARDED, self::CONFIRMED], true)) {
             throw new \RuntimeException("Invalid status {$status}");
         }
 

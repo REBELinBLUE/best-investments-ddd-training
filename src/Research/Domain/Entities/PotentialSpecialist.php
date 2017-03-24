@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Prospecting\Domain\Entities;
+namespace BestInvestments\Research\Domain\Entities;
 
 class PotentialSpecialist
 {

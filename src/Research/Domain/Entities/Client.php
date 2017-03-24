@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Research\Domain\Entities;
+namespace BestInvestments\Research\Domain\Entities;
 
 class Client
 {
-
 }
