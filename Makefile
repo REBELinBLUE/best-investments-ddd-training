@@ -7,7 +7,7 @@ YELLOW   := $(shell tput -Txterm setaf 3)
 RESET    := $(shell tput -Txterm sgr0)
 COMPOSER := $(shell command -v composer 2> /dev/null)
 
-test: lint phpcs phpunit phpstan phpmd behat
+test: install lint phpcs phpunit phpstan phpmd behat
 
 ## Install composer locally
 composer:
