@@ -3,7 +3,6 @@
 namespace BestInvestments\Research\Domain\Entities;
 
 use BestInvestments\Research\Domain\ValueObjects\SpecialistIdentifier;
-use BestInvestments\Research\Domain\ValueObjects\SpecialistStatus;
 
 class Specialist
 {

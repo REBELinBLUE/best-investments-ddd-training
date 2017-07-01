@@ -10,9 +10,9 @@ use BestInvestments\Research\Domain\ValueObjects\ManagerIdentifier;
 use BestInvestments\Research\Domain\ValueObjects\ProjectReference;
 use BestInvestments\Research\Domain\ValueObjects\ProjectStatus;
 use BestInvestments\Research\Domain\ValueObjects\SpecialistIdentifier;
-use DateTime;
 use BestInvestments\Research\Support\ConsultationList;
 use BestInvestments\Research\Support\SpecialistList;
+use DateTime;
 
 class Project
 {
