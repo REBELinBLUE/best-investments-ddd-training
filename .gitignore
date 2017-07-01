@@ -1,7 +1,6 @@
 # Composer files
 composer.phar
 vendor/
-bin/
 
 # Dev files
 build/
