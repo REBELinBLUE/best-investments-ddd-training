@@ -7,7 +7,7 @@ YELLOW   := $(shell tput -Txterm setaf 3)
 RESET    := $(shell tput -Txterm sgr0)
 COMPOSER := $(shell command -v composer 2> /dev/null)
 
-test: lint phpcs phpunit phpstan phpmd
+test: lint phpcs phpunit phpstan phpmd behat
 
 ## Install composer locally
 composer:
@@ -27,6 +27,11 @@ endif
 phpunit:
 	@echo "${GREEN}Unit tests${RESET}"
 	@php vendor/bin/phpunit
+
+## Run Behat
+behat:
+	@echo "${GREEN}Behat${RESET}"
+	@php vendor/bin/behat --format progress
 
 ## Run PHP mess detector
 phpmd:

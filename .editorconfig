@@ -16,7 +16,7 @@ indent_style = tab
 [*.php]
 max_line_length = 120
 
-[*.{yml,json}]
+[*.{yml,json,feature}]
 indent_size = 2
 
 [composer.json]
