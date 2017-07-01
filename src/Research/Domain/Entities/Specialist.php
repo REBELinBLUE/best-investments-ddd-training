@@ -7,32 +7,15 @@ use BestInvestments\Research\Domain\ValueObjects\SpecialistStatus;
 
 class Specialist
 {
-    private $identifier;
-    private $status;
-    private $acceptedTerms;
+    /** @var SpecialistIdentifier */
+    private $specialistId;
 
-    private function __construct(SpecialistIdentifier $identifier)
+    /** @var string */
+    private $name;
+
+    public function __construct(SpecialistIdentifier $specialistId, string $name)
     {
-        $this->identifier             = $identifier;
-        $this->acceptedTerms          = false;
-        $this->status                 = new SpecialistStatus(SpecialistStatus::UNKNOWN);
-    }
-
-    public function approve()
-    {
-        if ($this->status->isNot(SpecialistStatus::UNKNOWN)) {
-            throw new \RuntimeException('Specialist can not be discarded if it has already been approved or discarded');
-        }
-
-        $this->status = new SpecialistStatus(SpecialistStatus::APPROVED);
-    }
-
-    public function discard()
-    {
-        if ($this->status->isNot(SpecialistStatus::UNKNOWN)) {
-            throw new \RuntimeException('Specialist can not be discarded if it has already been approved or discarded');
-        }
-
-        $this->status = new SpecialistStatus(SpecialistStatus::DISCARDED);
+        $this->specialistId = $specialistId;
+        $this->name         = $name;
     }
 }

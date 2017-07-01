@@ -7,6 +7,8 @@ class SpecialistStatus
     const UNKNOWN   = 'unknown';
     const APPROVED  = 'approved';
     const DISCARDED = 'discarded';
+
+    /** @var string */
     private $status;
 
     public function __construct(string $status)
@@ -23,6 +25,9 @@ class SpecialistStatus
         return $this->status;
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.ShortMethodName)
+     */
     public function is($status): bool
     {
         return ($this->status === $status);

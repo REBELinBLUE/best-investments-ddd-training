@@ -5,14 +5,14 @@ namespace BestInvestments\Research\Domain\ValueObjects;
 class ProjectStatus
 {
     const DRAFT   = 'draft';
-    const STARTED = 'started';
+    const ACTIVE  = 'active';
     const CLOSED  = 'closed';
 
     private $status;
 
     public function __construct(string $status)
     {
-        if (!in_array($status, [self::DRAFT, self::STARTED, self::CLOSED], true)) {
+        if (!in_array($status, [self::DRAFT, self::ACTIVE, self::CLOSED], true)) {
             throw new \RuntimeException("Invalid status {$status}");
         }
 
@@ -24,6 +24,9 @@ class ProjectStatus
         return $this->status;
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.ShortMethodName)
+     */
     public function is($status): bool
     {
         return ($this->status === $status);

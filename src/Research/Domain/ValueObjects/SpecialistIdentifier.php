@@ -4,9 +4,10 @@ namespace BestInvestments\Research\Domain\ValueObjects;
 
 class SpecialistIdentifier
 {
+    /** @var string */
     private $value;
 
-    public function __construct(int $value)
+    public function __construct(string $value)
     {
         $this->value = $value;
     }

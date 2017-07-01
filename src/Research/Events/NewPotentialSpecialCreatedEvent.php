@@ -1,6 +1,6 @@
 <?php
 
-namespace Research\Events;
+namespace BestInvestments\Research\Events;
 
 class NewPotentialSpecialCreatedEvent
 {

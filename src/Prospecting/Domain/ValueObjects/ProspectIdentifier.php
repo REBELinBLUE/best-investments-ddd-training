@@ -4,9 +4,10 @@ namespace BestInvestments\Prospecting\Domain\ValueObjects;
 
 class ProspectIdentifier
 {
+    /** @var string */
     private $value;
 
-    public function __construct(int $value)
+    public function __construct(string $value)
     {
         $this->value = $value;
     }

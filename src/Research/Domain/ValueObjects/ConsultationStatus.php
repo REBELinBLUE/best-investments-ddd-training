@@ -8,6 +8,7 @@ class ConsultationStatus
     const DISCARDED = 'disgarded';
     const CONFIRMED = 'confirmed';
 
+    /** @var string */
     private $status;
 
     public function __construct(string $status)
@@ -24,6 +25,9 @@ class ConsultationStatus
         return $this->status;
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.ShortMethodName)
+     */
     public function is($status): bool
     {
         return ($this->status === $status);

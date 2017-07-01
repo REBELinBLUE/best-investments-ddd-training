@@ -2,14 +2,14 @@
 
 namespace BestInvestments\Research\Domain\ValueObjects;
 
-class ProjectReference
+class ConsultationIdentifier
 {
     /** @var string */
     private $value;
 
-    public function __construct()
+    public function __construct(string $value)
     {
-        $this->value = chr(mt_rand(65, 90)) . chr(mt_rand(65, 90)) . sprintf('%04d', mt_rand(1, 9999));
+        $this->value = $value;
     }
 
     public function __toString(): string
