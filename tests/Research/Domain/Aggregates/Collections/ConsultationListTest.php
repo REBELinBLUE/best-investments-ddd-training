@@ -101,6 +101,8 @@ class ConsultationListTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($result);
     }
 
+    // FIXEM: testGet
+
     private function getConsultation(): Consultation
     {
         return new Consultation(

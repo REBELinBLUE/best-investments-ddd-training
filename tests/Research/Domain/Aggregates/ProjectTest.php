@@ -6,6 +6,8 @@ use BestInvestments\Research\Domain\Aggregates\Collections\ConsultationList;
 use BestInvestments\Research\Domain\Aggregates\Collections\SpecialistList;
 use BestInvestments\Research\Domain\Aggregates\Project;
 use BestInvestments\Research\Domain\ValueObjects\ClientIdentifier;
+use BestInvestments\Research\Domain\ValueObjects\ConsultationIdentifier;
+use BestInvestments\Research\Domain\ValueObjects\ConsultationStatus;
 use BestInvestments\Research\Domain\ValueObjects\ManagerIdentifier;
 use BestInvestments\Research\Domain\ValueObjects\ProjectReference;
 use BestInvestments\Research\Domain\ValueObjects\ProjectStatus;
@@ -399,7 +401,9 @@ class ProjectTest extends \PHPUnit_Framework_TestCase
         /** @var ConsultationList $consultations */
         $consultations = $this->getInnerPropertyValueByReflection($project, 'consultations');
 
-        $consultation = $consultations->getOpenConsultationForSpecialist($specialistId);
+        $consultation = $consultations->get($consultationId);
+
+        $this->assertNotNull($consultation, 'Consultation not in collection');
 
         /** @var DateTimeImmutable $consultationDate */
         $consultationDate = $this->getInnerPropertyValueByReflection($consultation, 'startTime');
@@ -473,18 +477,42 @@ class ProjectTest extends \PHPUnit_Framework_TestCase
 
     public function testReportConsultation()
     {
-        $this->markTestSkipped('Broken');
-
         // Arrange
-        $specialistId = new SpecialistIdentifier('specialist-1234');
+        $specialistId     = new SpecialistIdentifier('specialist-1234');
+        $reportedDuration = 100;
 
         $project        = $this->getStartedProjectWithApprovedSpecialist($specialistId);
         $consultationId = $project->scheduleConsultation(new DateTimeImmutable('2017-06-05'), $specialistId);
 
         // Act
-        $project->reportConsultation($consultationId, 100);
+        $project->reportConsultation($consultationId, $reportedDuration);
 
         // Assert
+        /** @var ConsultationList $consultations */
+        $consultations = $this->getInnerPropertyValueByReflection($project, 'consultations');
+        $consultation  = $consultations->get($consultationId);
+
+        /** @var int $duration */
+        $duration = $this->getInnerPropertyValueByReflection($consultation, 'duration');
+
+        /** @var ConsultationStatus status */
+        $status = $this->getInnerPropertyValueByReflection($consultation, 'status');
+
+        $this->assertSame($reportedDuration, $duration);
+        $this->assertTrue($status->is(ConsultationStatus::CONFIRMED), 'Consultation has not been confirmed');
+    }
+
+    public function testReportConsultationThrowsExceptionWhenConsultationIsNotScheduled()
+    {
+        // Arrange
+        $project        = $this->getStartedProjectWithApprovedSpecialist(new SpecialistIdentifier('specialist-1234'));
+        $consultationId = new ConsultationIdentifier('consultation-1234');
+
+        // Assert
+        $this->expectException(RuntimeException::class);
+
+        // Act
+        $project->reportConsultation($consultationId, 100);
     }
 
     private function getProject(): Project

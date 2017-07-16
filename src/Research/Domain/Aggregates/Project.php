@@ -159,22 +159,22 @@ class Project
 
     public function reportConsultation(ConsultationIdentifier $consultationId, int $duration)
     {
-        if ($this->consultations->contains($consultationId)) {
+        $consultation = $this->consultations->get($consultationId);
+
+        if (is_null($consultation)) {
             throw new \RuntimeException('There is no consultation with the supplied id');
         }
-
-        $consultation = $this->consultations->get($consultationId);
 
         $consultation->reportTime($duration);
     }
 
     public function discardConsultation(ConsultationIdentifier $consultationId)
     {
-        if ($this->consultations->contains($consultationId)) {
+        $consultation = $this->consultations->get($consultationId);
+
+        if (is_null($consultation)) {
             throw new \RuntimeException('There is no consultation with the supplied id');
         }
-
-        $consultation = $this->consultations->get($consultationId);
 
         if ($consultation->isNotOpen()) {
             throw new \RuntimeException('The consultation is not open');
