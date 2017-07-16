@@ -99,7 +99,7 @@ class Project
 
     public function addSpecialist(SpecialistIdentifier $specialistId)
     {
-        $this->ensureProjectIsActive(); // FIXME: Is this needed?
+        $this->ensureProjectIsActive();
 
         if ($this->unapprovedSpecialists->contains($specialistId) ||
             $this->approvedSpecialists->contains($specialistId) ||

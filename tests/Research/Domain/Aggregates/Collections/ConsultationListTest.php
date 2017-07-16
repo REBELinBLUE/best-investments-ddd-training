@@ -5,20 +5,27 @@ namespace BestInvestments\Tests\Research\Domain\Aggregates\Collections;
 use BestInvestments\Research\Domain\Aggregates\Collections\ConsultationList;
 use BestInvestments\Research\Domain\Entities\Consultation;
 use BestInvestments\Research\Domain\ValueObjects\SpecialistIdentifier;
+use BestInvestments\Tests\PrivatePropertyTrait;
 use DateTimeImmutable;
+use Illuminate\Support\Collection;
 
 class ConsultationListTest extends \PHPUnit_Framework_TestCase
 {
+    use PrivatePropertyTrait;
+
     public function testAddPushesConsultationToCollection()
     {
         // Arrange
-        $collection   = new ConsultationList();
+        $consultationList   = new ConsultationList();
         $consultation = $this->getConsultation();
 
         // Act
-        $collection->add($consultation);
+        $consultationList->add($consultation);
 
         // Assert
+        /** @var Collection $collection */
+        $collection = $this->getInnerPropertyValueByReflection($consultationList, 'collection');
+
         $this->assertSame(1, $collection->count());
         $this->assertSame($collection->pop(), $consultation);
     }

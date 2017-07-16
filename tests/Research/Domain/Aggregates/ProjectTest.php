@@ -438,10 +438,7 @@ class ProjectTest extends \PHPUnit_Framework_TestCase
         $this->expectException(RuntimeException::class);
 
         // Act
-        $project->scheduleConsultation(
-            new DateTimeImmutable('2017-05-10'),
-            $specialistId
-        );
+        $project->scheduleConsultation(new DateTimeImmutable('2017-05-10'), $specialistId);
     }
 
     public function testScheduleConsultationThrowsAnExceptionWhenSpecialistIsDiscarded()
@@ -456,33 +453,38 @@ class ProjectTest extends \PHPUnit_Framework_TestCase
         $this->expectException(RuntimeException::class);
 
         // Act
-        $project->scheduleConsultation(
-            new DateTimeImmutable('2017-05-10'),
-            $specialistId
-        );
+        $project->scheduleConsultation(new DateTimeImmutable('2017-05-10'), $specialistId);
     }
 
     public function testScheduleConsultationThrowsAnExceptionWhenSpecialistAlreadyHasAnOpenConsultation()
     {
         // Arrange
-        $project      = $this->getStartedProject();
         $specialistId = new SpecialistIdentifier('specialist-1234');
-        $project->addSpecialist($specialistId);
-        $project->approveSpecialist($specialistId);
 
-        $project->scheduleConsultation(
-            new DateTimeImmutable('2017-05-10'),
-            $specialistId
-        );
+        $project = $this->getStartedProjectWithApprovedSpecialist($specialistId);
+        $project->scheduleConsultation(new DateTimeImmutable('2017-05-10'), $specialistId);
 
         // Assert
         $this->expectException(RuntimeException::class);
 
         // Act
-        $project->scheduleConsultation(
-            new DateTimeImmutable('2017-06-05'),
-            $specialistId
-        );
+        $project->scheduleConsultation(new DateTimeImmutable('2017-06-05'), $specialistId);
+    }
+
+    public function testReportConsultation()
+    {
+        $this->markTestSkipped('Broken');
+
+        // Arrange
+        $specialistId = new SpecialistIdentifier('specialist-1234');
+
+        $project = $this->getStartedProjectWithApprovedSpecialist($specialistId);
+        $consultationId = $project->scheduleConsultation(new DateTimeImmutable('2017-06-05'), $specialistId);
+
+        // Act
+        $project->reportConsultation($consultationId, 100);
+
+        // Assert
     }
 
     private function getProject(): Project
@@ -498,6 +500,15 @@ class ProjectTest extends \PHPUnit_Framework_TestCase
     {
         $project = $this->getProject();
         $project->start(new ManagerIdentifier('manager-1234'));
+
+        return $project;
+    }
+
+    private function getStartedProjectWithApprovedSpecialist(SpecialistIdentifier $specialistId): Project
+    {
+        $project = $this->getStartedProject();
+        $project->addSpecialist($specialistId);
+        $project->approveSpecialist($specialistId);
 
         return $project;
     }

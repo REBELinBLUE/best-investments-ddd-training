@@ -7,23 +7,31 @@ use BestInvestments\Research\Domain\ValueObjects\SpecialistIdentifier;
 use Illuminate\Support\Collection;
 
 // FIXME: Change this to create a collection not extend it
-class ConsultationList extends Collection
+class ConsultationList
 {
-    public function add(Consultation $consultation): self
+    /** @var Collection */
+    private $collection;
+
+    public function __construct()
     {
-        return $this->push($consultation);
+        $this->collection = new Collection();
+    }
+
+    public function add(Consultation $consultation)
+    {
+        return $this->collection->push($consultation);
     }
 
     public function hasOpenConsultations(): bool
     {
-        return $this->filter(function (Consultation $consultation) {
+        return $this->collection->filter(function (Consultation $consultation) {
             return $consultation->isOpen();
         })->count() > 0;
     }
 
     public function getOpenConsultationForSpecialist(SpecialistIdentifier $specialistId): ?Consultation
     {
-        return $this->first(function (Consultation $consultation) use ($specialistId) {
+        return $this->collection->first(function (Consultation $consultation) use ($specialistId) {
             return $consultation->isOpen() && $consultation->isForSpecialist($specialistId);
         });
     }
