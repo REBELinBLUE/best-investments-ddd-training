@@ -2,24 +2,24 @@
 
 namespace BestInvestments\Research\Domain\Aggregates;
 
+use BestInvestments\Research\Domain\Aggregates\Collections\ConsultationList;
+use BestInvestments\Research\Domain\Aggregates\Collections\SpecialistList;
 use BestInvestments\Research\Domain\Entities\Consultation;
-use BestInvestments\Research\Domain\Entities\PotentialSpecialist;
 use BestInvestments\Research\Domain\ValueObjects\ClientIdentifier;
 use BestInvestments\Research\Domain\ValueObjects\ConsultationIdentifier;
 use BestInvestments\Research\Domain\ValueObjects\ManagerIdentifier;
 use BestInvestments\Research\Domain\ValueObjects\ProjectReference;
 use BestInvestments\Research\Domain\ValueObjects\ProjectStatus;
 use BestInvestments\Research\Domain\ValueObjects\SpecialistIdentifier;
-use BestInvestments\Research\Support\ConsultationList;
-use BestInvestments\Research\Support\SpecialistList;
-use DateTime;
+
+use DateTimeImmutable;
 
 class Project
 {
     /** @var string */
     private $name;
 
-    /** @var DateTime */
+    /** @var DateTimeImmutable */
     private $deadline;
 
     /** @var ProjectReference */
@@ -46,7 +46,7 @@ class Project
     /** @var ConsultationList */
     private $consultations;
 
-    private function __construct(string $name, DateTime $deadline, ClientIdentifier $clientId)
+    private function __construct(string $name, DateTimeImmutable $deadline, ClientIdentifier $clientId)
     {
         $this->name                  = $name;
         $this->deadline              = $deadline;
@@ -61,7 +61,7 @@ class Project
         // TODO: Dispatch NewProjectDrafted event
     }
 
-    public static function draft(string $name, DateTime $deadline, ClientIdentifier $clientId): Project
+    public static function draft(string $name, DateTimeImmutable $deadline, ClientIdentifier $clientId): Project
     {
         return new self($name, $deadline, $clientId);
     }
@@ -87,19 +87,19 @@ class Project
         $this->status = new ProjectStatus(ProjectStatus::CLOSED);
     }
 
-    // FIXME: Not sure this is right?
-    public function potentialSpecialist(string $name, string $contactDetails)
-    {
-        $this->ensureProjectIsActive();
-
-        new PotentialSpecialist(new SpecialistIdentifier(1234), $name, $contactDetails);
-
-        // TODO: Dispatch NewPotentialSpecialCreatedEvent
-    }
+    //    // FIXME: Not sure this is right?
+    //    public function potentialSpecialist(string $name, string $contactDetails)
+    //    {
+    //        $this->ensureProjectIsActive();
+    //
+    //        new PotentialSpecialist(new SpecialistIdentifier(1234), $name, $contactDetails);
+    //
+    //        // TODO: Dispatch NewPotentialSpecialCreatedEvent
+    //    }
 
     public function addSpecialist(SpecialistIdentifier $specialistId)
     {
-        $this->ensureProjectIsActive();
+        $this->ensureProjectIsActive(); // FIXME: Is this needed?
 
         if ($this->unapprovedSpecialists->contains($specialistId) ||
             $this->approvedSpecialists->contains($specialistId) ||
@@ -113,7 +113,7 @@ class Project
 
     public function approveSpecialist(SpecialistIdentifier $specialistId)
     {
-        $this->ensureProjectIsActive();
+        $this->ensureProjectIsActive(); // FIXME: Is this needed?
 
         if ($this->unapprovedSpecialists->doesNotContain($specialistId)) {
             throw new \RuntimeException('Specialist not added to project');
@@ -125,7 +125,7 @@ class Project
 
     public function discardSpecialist(SpecialistIdentifier $specialistId)
     {
-        $this->ensureProjectIsActive();
+        $this->ensureProjectIsActive(); // FIXME: Is this needed?
 
         if ($this->unapprovedSpecialists->doesNotContain($specialistId)) {
             throw new \RuntimeException('Specialist not added to project');
@@ -136,7 +136,7 @@ class Project
     }
 
     public function scheduleConsultation(
-        DateTime $startTime,
+        DateTimeImmutable $startTime,
         SpecialistIdentifier $specialistId
     ): ConsultationIdentifier {
         $this->ensureProjectIsActive();
@@ -145,7 +145,7 @@ class Project
             throw new \RuntimeException('The specialist is not currently approved');
         }
 
-        $consultation = $this->getOpenConsultationForSpecialist($specialistId);
+        $consultation = $this->consultations->getOpenConsultationForSpecialist($specialistId);
         if ($consultation) {
             throw new \RuntimeException('There is already an open consultation with the specialist');
         }
@@ -181,11 +181,6 @@ class Project
         }
 
         $consultation->discard();
-    }
-
-    private function getOpenConsultationForSpecialist(SpecialistIdentifier $specialistId): ?Consultation
-    {
-        return null;
     }
 
     private function ensureProjectIsActive()

@@ -2,6 +2,8 @@
 
 namespace BestInvestments\Research\Domain\ValueObjects;
 
+use InvalidArgumentException;
+
 class ProjectStatus
 {
     const DRAFT   = 'draft';
@@ -13,7 +15,7 @@ class ProjectStatus
     public function __construct(string $status)
     {
         if (!in_array($status, [self::DRAFT, self::ACTIVE, self::CLOSED], true)) {
-            throw new \RuntimeException("Invalid status {$status}");
+            throw new InvalidArgumentException("Invalid status {$status}");
         }
 
         $this->status = $status;

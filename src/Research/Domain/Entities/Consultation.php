@@ -5,11 +5,14 @@ namespace BestInvestments\Research\Domain\Entities;
 use BestInvestments\Research\Domain\ValueObjects\ConsultationIdentifier;
 use BestInvestments\Research\Domain\ValueObjects\ConsultationStatus;
 use BestInvestments\Research\Domain\ValueObjects\SpecialistIdentifier;
-use DateTime;
+use DateTimeImmutable;
+use InvalidArgumentException;
+use Ramsey\Uuid\Uuid;
+use RuntimeException;
 
 class Consultation
 {
-    /** @var DateTime */
+    /** @var DateTimeImmutable */
     private $startTime;
 
     /** @var SpecialistIdentifier */
@@ -24,18 +27,18 @@ class Consultation
     /** @var ConsultationIdentifier */
     private $consultationId;
 
-    public function __construct(DateTime $startTime, SpecialistIdentifier $specialistId)
+    public function __construct(DateTimeImmutable $startTime, SpecialistIdentifier $specialistId)
     {
         $this->startTime      = $startTime;
         $this->specialistId   = $specialistId;
         $this->status         = new ConsultationStatus(ConsultationStatus::OPENED);
-        $this->consultationId = new ConsultationIdentifier('12345');
+        $this->consultationId = new ConsultationIdentifier(Uuid::uuid4()->toString());
     }
 
     public function discard()
     {
         if (!$this->isOpen()) {
-            throw new \RuntimeException('The consultation is already closed');
+            throw new RuntimeException('The consultation is already closed');
         }
 
         $this->status = new ConsultationStatus(ConsultationStatus::DISCARDED);
@@ -59,11 +62,11 @@ class Consultation
     public function reportTime(int $duration)
     {
         if ($this->isNotOpen()) {
-            throw new \RuntimeException('The consultation is already closed');
+            throw new RuntimeException('The consultation is already closed');
         }
 
-        if ($duration < 0 || $duration !== (int) $duration) {
-            throw new \InvalidArgumentException('Reported time can only be a positive integer');
+        if ($duration <= 0) {
+            throw new InvalidArgumentException('Reported time can only be a positive integer');
         }
 
         $this->duration = $duration;

@@ -2,6 +2,8 @@
 
 namespace BestInvestments\Research\Domain\ValueObjects;
 
+use InvalidArgumentException;
+
 class SpecialistStatus
 {
     const UNKNOWN   = 'unknown';
@@ -14,7 +16,7 @@ class SpecialistStatus
     public function __construct(string $status)
     {
         if (!in_array($status, [self::UNKNOWN, self::APPROVED, self::DISCARDED], true)) {
-            throw new \RuntimeException("Invalid status {$status}");
+            throw new InvalidArgumentException("Invalid status {$status}");
         }
 
         $this->status = $status;

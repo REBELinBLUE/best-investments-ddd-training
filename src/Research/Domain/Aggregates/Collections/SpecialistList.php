@@ -1,6 +1,6 @@
 <?php
 
-namespace BestInvestments\Research\Support;
+namespace BestInvestments\Research\Domain\Aggregates\Collections;
 
 use BestInvestments\Research\Domain\ValueObjects\SpecialistIdentifier;
 use Illuminate\Support\Collection;
@@ -22,7 +22,9 @@ class SpecialistList
 
     public function remove(SpecialistIdentifier $specialistId)
     {
-        $this->collection->pull($specialistId);
+        $this->collection = $this->collection->filter(function ($entry) use ($specialistId) {
+            return $entry !== $specialistId;
+        });
     }
 
     public function contains(SpecialistIdentifier $specialistId): bool

@@ -17,4 +17,14 @@ class Specialist
         $this->specialistId = $specialistId;
         $this->name         = $name;
     }
+
+    public function getId(): SpecialistIdentifier
+    {
+        return $this->specialistId;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
 }

@@ -17,6 +17,7 @@
     },
     "require": {
         "php": ">=7.1",
+        "ramsey/uuid": "^3.6",
         "tightenco/collect": "^5.4"
     },
     "require-dev": {

@@ -2,10 +2,12 @@
 
 namespace BestInvestments\Research\Domain\ValueObjects;
 
+use InvalidArgumentException;
+
 class ConsultationStatus
 {
     const OPENED    = 'opened';
-    const DISCARDED = 'disgarded';
+    const DISCARDED = 'discarded';
     const CONFIRMED = 'confirmed';
 
     /** @var string */
@@ -14,7 +16,7 @@ class ConsultationStatus
     public function __construct(string $status)
     {
         if (!in_array($status, [self::OPENED, self::DISCARDED, self::CONFIRMED], true)) {
-            throw new \RuntimeException("Invalid status {$status}");
+            throw new InvalidArgumentException("Invalid status {$status}");
         }
 
         $this->status = $status;
