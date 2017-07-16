@@ -17,7 +17,7 @@ class ConsultationListTest extends \PHPUnit_Framework_TestCase
     {
         // Arrange
         $consultationList   = new ConsultationList();
-        $consultation = $this->getConsultation();
+        $consultation       = $this->getConsultation();
 
         // Act
         $consultationList->add($consultation);

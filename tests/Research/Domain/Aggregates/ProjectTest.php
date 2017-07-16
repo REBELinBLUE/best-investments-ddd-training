@@ -478,7 +478,7 @@ class ProjectTest extends \PHPUnit_Framework_TestCase
         // Arrange
         $specialistId = new SpecialistIdentifier('specialist-1234');
 
-        $project = $this->getStartedProjectWithApprovedSpecialist($specialistId);
+        $project        = $this->getStartedProjectWithApprovedSpecialist($specialistId);
         $consultationId = $project->scheduleConsultation(new DateTimeImmutable('2017-06-05'), $specialistId);
 
         // Act
