@@ -4,6 +4,7 @@ namespace BestInvestments\Tests;
 
 use ReflectionClass;
 
+// FIXME: Shouldn't really need this, clean up places it is used
 trait PrivatePropertyTrait
 {
     protected function getInnerPropertyValueByReflection($instance, $property)

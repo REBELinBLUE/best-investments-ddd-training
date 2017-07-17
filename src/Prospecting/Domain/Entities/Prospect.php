@@ -8,7 +8,7 @@ use BestInvestments\Prospecting\Domain\ValueObjects\ProspectStatus;
 class Prospect
 {
     /** @var ProspectIdentifier */
-    private $prospectIdentifier;
+    private $prospectId;
 
     /** @var ProspectStatus */
     private $status;
@@ -21,10 +21,10 @@ class Prospect
 
     public function __construct(ProspectIdentifier $prospectId, string $name, string $contactDetails)
     {
-        $this->prospectIdentifier = $prospectId;
-        $this->status             = new ProspectStatus(ProspectStatus::NEW);
-        $this->name               = $name;
-        $this->contactDetails     = $contactDetails;
+        $this->prospectId     = $prospectId;
+        $this->status         = new ProspectStatus(ProspectStatus::NEW);
+        $this->name           = $name;
+        $this->contactDetails = $contactDetails;
     }
 
     public function interested()

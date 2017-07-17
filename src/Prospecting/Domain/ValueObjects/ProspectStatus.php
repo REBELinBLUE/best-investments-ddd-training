@@ -2,6 +2,8 @@
 
 namespace BestInvestments\Prospecting\Domain\ValueObjects;
 
+use InvalidArgumentException;
+
 class ProspectStatus
 {
     const NEW            = 'new';
@@ -15,7 +17,7 @@ class ProspectStatus
     public function __construct(string $status)
     {
         if (!in_array($status, [self::NEW, self::INTERESTED, self::NOT_INTERESTED, self::REGISTERED], true)) {
-            throw new \RuntimeException("Invalid status {$status}");
+            throw new InvalidArgumentException("Invalid status {$status}");
         }
 
         $this->status = $status;

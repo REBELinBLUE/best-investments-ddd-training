@@ -31,7 +31,7 @@ class ProjectTest extends \PHPUnit_Framework_TestCase
         $project = Project::draft($name, $deadline, $clientId);
 
         // Assert
-        $this->assertSame($name, $this->getInnerPropertyValueByReflection($project, 'name'));
+         $this->assertSame($name, $this->getInnerPropertyValueByReflection($project, 'name'));
         $this->assertSame($deadline, $this->getInnerPropertyValueByReflection($project, 'deadline'));
         $this->assertSame($clientId, $this->getInnerPropertyValueByReflection($project, 'clientId'));
 
