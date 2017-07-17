@@ -515,6 +515,70 @@ class ProjectTest extends \PHPUnit_Framework_TestCase
         $project->reportConsultation($consultationId, 100);
     }
 
+    public function testDiscardConsultation()
+    {
+        // Arrange
+        $specialistId   = new SpecialistIdentifier('specialist-1234');
+        $project        = $this->getStartedProjectWithApprovedSpecialist($specialistId);
+        $consultationId = $project->scheduleConsultation(new DateTimeImmutable('2017-06-05'), $specialistId);
+
+        // Act
+        $project->discardConsultation($consultationId);
+
+        // Assert
+        /** @var ConsultationList $consultations */
+        $consultations = $this->getInnerPropertyValueByReflection($project, 'consultations');
+        $consultation  = $consultations->get($consultationId);
+
+        /** @var ConsultationStatus status */
+        $status = $this->getInnerPropertyValueByReflection($consultation, 'status');
+
+        $this->assertTrue($status->is(ConsultationStatus::DISCARDED), 'Consultation has not been discarded');
+    }
+
+    public function testDiscardConsultationThrowsExceptionWhenConsultationIsNotScheduled()
+    {
+        // Arrange
+        $project        = $this->getStartedProjectWithApprovedSpecialist(new SpecialistIdentifier('specialist-1234'));
+        $consultationId = new ConsultationIdentifier('consultation-1234');
+
+        // Assert
+        $this->expectException(RuntimeException::class);
+
+        // Act
+        $project->discardConsultation($consultationId);
+    }
+
+    public function testDiscardConsultationThrowsExceptionWhenConsultationIsAlreadyDiscarded()
+    {
+        // Arrange
+        $specialistId   = new SpecialistIdentifier('specialist-1234');
+        $project        = $this->getStartedProjectWithApprovedSpecialist($specialistId);
+        $consultationId = $project->scheduleConsultation(new DateTimeImmutable('2017-06-05'), $specialistId);
+        $project->discardConsultation($consultationId);
+
+        // Assert
+        $this->expectException(RuntimeException::class);
+
+        // Act
+        $project->discardConsultation($consultationId);
+    }
+
+    public function testDiscardConsultationThrowsExceptionWhenConsultationIsAlreadyConfirmed()
+    {
+        // Arrange
+        $specialistId   = new SpecialistIdentifier('specialist-1234');
+        $project        = $this->getStartedProjectWithApprovedSpecialist($specialistId);
+        $consultationId = $project->scheduleConsultation(new DateTimeImmutable('2017-06-05'), $specialistId);
+        $project->reportConsultation($consultationId, 100);
+
+        // Assert
+        $this->expectException(RuntimeException::class);
+
+        // Act
+        $project->discardConsultation($consultationId);
+    }
+
     private function getProject(): Project
     {
         return Project::draft(
