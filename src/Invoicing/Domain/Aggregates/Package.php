@@ -47,7 +47,7 @@ class Package
 
     public function attachConsultation(OutstandingConsultation $consultation)
     {
-        $this->consultations[] = $consultation;
+        $this->consultations[] = $consultation; // FIXME: Change for a collection
     }
 
     public function transferRemainingHoursOut(): TimeIncrement

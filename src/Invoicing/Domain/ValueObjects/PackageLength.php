@@ -9,7 +9,7 @@ class PackageLength
     /** @var int */
     private $length;
 
-    public function __construct(int $length)
+    public function __construct(int $length) // FIXME: Maybe make this private
     {
         if ($length !== 6 && $length !== 12) {
             throw new InvalidArgumentException('The package length must be 6 or 12 months');
