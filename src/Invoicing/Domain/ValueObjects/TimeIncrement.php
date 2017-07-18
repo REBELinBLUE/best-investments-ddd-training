@@ -23,4 +23,24 @@ class TimeIncrement
         $this->minutes    = $minutes;
         $this->increments = (int) ceil($minutes / self::MINUTES_PER_INCREMENT);
     }
+
+    public function add(TimeIncrement $other): self
+    {
+        return new self($this->getMinutes() + $other->getMinutes());
+    }
+
+    public function subtract(TimeIncrement $other): self
+    {
+        return new self($this->getMinutes() - $other->getMinutes());
+    }
+
+    public function isMoreThan(TimeIncrement $other): bool
+    {
+        return $this->getMinutes() > $other->getMinutes();
+    }
+
+    public function getMinutes(): int
+    {
+        return $this->minutes;
+    }
 }

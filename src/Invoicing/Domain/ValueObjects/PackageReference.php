@@ -26,4 +26,14 @@ class PackageReference
     {
         return sprintf('%s-%s-%s', $this->name, $this->startDate->format('Ym'), $this->length);
     }
+
+    public function getStartDate(): DateTimeImmutable
+    {
+        return $this->startDate;
+    }
+
+    public function getLength(): PackageLength
+    {
+        return $this->length;
+    }
 }

@@ -16,4 +16,15 @@ class ClientIdentifier
     {
         return $this->value;
     }
+
+    /** @SuppressWarnings(PHPMD.ShortMethodName) */
+    public function is(ClientIdentifier $clientId)
+    {
+        return $this->value === (string) $clientId;
+    }
+
+    public function isNot(ClientIdentifier $clientId)
+    {
+        return $this->value !== (string) $clientId;
+    }
 }

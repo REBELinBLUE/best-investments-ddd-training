@@ -27,9 +27,7 @@ class ConsultationStatus
         return $this->status;
     }
 
-    /**
-     * @SuppressWarnings(PHPMD.ShortMethodName)
-     */
+    /** @SuppressWarnings(PHPMD.ShortMethodName) */
     public function is($status): bool
     {
         return ($this->status === $status);

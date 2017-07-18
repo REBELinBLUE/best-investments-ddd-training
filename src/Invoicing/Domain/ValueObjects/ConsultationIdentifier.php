@@ -1,6 +1,6 @@
 <?php
 
-namespace BestInvestments\Research\Domain\ValueObjects;
+namespace BestInvestments\Invoicing\Domain\ValueObjects;
 
 class ConsultationIdentifier
 {
@@ -15,11 +15,5 @@ class ConsultationIdentifier
     public function __toString(): string
     {
         return $this->value;
-    }
-
-    /** @SuppressWarnings(PHPMD.ShortMethodName) */
-    public function is(ConsultationIdentifier $consultationId)
-    {
-        return $this->value === (string) $consultationId;
     }
 }

@@ -13,6 +13,7 @@ use BestInvestments\Research\Domain\ValueObjects\ProjectStatus;
 use BestInvestments\Research\Domain\ValueObjects\SpecialistIdentifier;
 
 use DateTimeImmutable;
+use RuntimeException;
 
 class Project
 {
@@ -69,7 +70,7 @@ class Project
     public function start(ManagerIdentifier $managerId)
     {
         if ($this->status->isNot(ProjectStatus::DRAFT)) {
-            throw new \RuntimeException('The project is already started');
+            throw new RuntimeException('The project is already started');
         }
 
         $this->managerId = $managerId;
@@ -81,7 +82,7 @@ class Project
         $this->ensureProjectIsActive();
 
         if ($this->consultations->hasOpenConsultations()) {
-            throw new \RuntimeException('There are consultations still open');
+            throw new RuntimeException('There are consultations still open');
         }
 
         $this->status = new ProjectStatus(ProjectStatus::CLOSED);
@@ -105,7 +106,7 @@ class Project
             $this->approvedSpecialists->contains($specialistId) ||
             $this->discardedSpecialists->contains($specialistId)
         ) {
-            throw new \RuntimeException('Specialist already added to project.');
+            throw new RuntimeException('Specialist already added to project.');
         }
 
         $this->unapprovedSpecialists->add($specialistId);
@@ -116,7 +117,7 @@ class Project
         $this->ensureProjectIsActive(); // FIXME: Is this needed?
 
         if ($this->unapprovedSpecialists->doesNotContain($specialistId)) {
-            throw new \RuntimeException('Specialist not added to project');
+            throw new RuntimeException('Specialist not added to project');
         }
 
         $this->unapprovedSpecialists->remove($specialistId);
@@ -128,7 +129,7 @@ class Project
         $this->ensureProjectIsActive(); // FIXME: Is this needed?
 
         if ($this->unapprovedSpecialists->doesNotContain($specialistId)) {
-            throw new \RuntimeException('Specialist not added to project');
+            throw new RuntimeException('Specialist not added to project');
         }
 
         $this->unapprovedSpecialists->remove($specialistId);
@@ -142,12 +143,12 @@ class Project
         $this->ensureProjectIsActive();
 
         if ($this->approvedSpecialists->doesNotContain($specialistId)) {
-            throw new \RuntimeException('The specialist is not currently approved');
+            throw new RuntimeException('The specialist is not currently approved');
         }
 
         $consultation = $this->consultations->getOpenConsultationForSpecialist($specialistId);
         if ($consultation) {
-            throw new \RuntimeException('There is already an open consultation with the specialist');
+            throw new RuntimeException('There is already an open consultation with the specialist');
         }
 
         $consultation = new Consultation($startTime, $specialistId);
@@ -162,7 +163,7 @@ class Project
         $consultation = $this->consultations->get($consultationId);
 
         if (is_null($consultation)) {
-            throw new \RuntimeException('There is no consultation with the supplied id');
+            throw new RuntimeException('There is no consultation with the supplied id');
         }
 
         $consultation->reportTime($duration);
@@ -173,11 +174,11 @@ class Project
         $consultation = $this->consultations->get($consultationId);
 
         if (is_null($consultation)) {
-            throw new \RuntimeException('There is no consultation with the supplied id');
+            throw new RuntimeException('There is no consultation with the supplied id');
         }
 
         if ($consultation->isNotOpen()) {
-            throw new \RuntimeException('The consultation is not open');
+            throw new RuntimeException('The consultation is not open');
         }
 
         $consultation->discard();
@@ -186,7 +187,7 @@ class Project
     private function ensureProjectIsActive()
     {
         if ($this->status->isNot(ProjectStatus::ACTIVE)) {
-            throw new \RuntimeException('The project is not yet started');
+            throw new RuntimeException('The project is not yet started');
         }
     }
 }

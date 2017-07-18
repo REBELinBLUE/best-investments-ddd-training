@@ -2,6 +2,7 @@
 
 namespace BestInvestments\Invoicing\Domain\Services;
 
+use BestInvestments\Invoicing\Domain\Repositories\PackageRepositoryInterface;
 use BestInvestments\Invoicing\Domain\ValueObjects\PackageReference;
 
 class TimeIncrementTransfer

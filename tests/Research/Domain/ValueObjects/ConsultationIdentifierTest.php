@@ -18,4 +18,28 @@ class ConsultationIdentifierTest extends \PHPUnit_Framework_TestCase
         // Assert
         $this->assertSame($expected, $actual);
     }
+
+    public function testIsReturnsTrueWhenConsultationIdMatches()
+    {
+        // Arrange
+        $consultationId = new ConsultationIdentifier('consultation-1234');
+
+        // Act
+        $result = $consultationId->is(new ConsultationIdentifier('consultation-1234'));
+
+        // Assert
+        $this->assertTrue($result);
+    }
+
+    public function testIsReturnsFlaseWhenConsultationIdDoesNotMatch()
+    {
+        // Arrange
+        $consultationId = new ConsultationIdentifier('consultation-1234');
+
+        // Act
+        $result = $consultationId->is(new ConsultationIdentifier('consultation-9876'));
+
+        // Assert
+        $this->assertFalse($result);
+    }
 }

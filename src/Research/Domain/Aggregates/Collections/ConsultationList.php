@@ -7,7 +7,6 @@ use BestInvestments\Research\Domain\ValueObjects\ConsultationIdentifier;
 use BestInvestments\Research\Domain\ValueObjects\SpecialistIdentifier;
 use Illuminate\Support\Collection;
 
-// FIXME: Change this to create a collection not extend it
 class ConsultationList
 {
     /** @var Collection */
@@ -40,7 +39,7 @@ class ConsultationList
     public function get(ConsultationIdentifier $consultationId): ?Consultation
     {
         return $this->collection->first(function (Consultation $consultation) use ($consultationId) {
-            return $consultation->getId() === $consultationId;
+            return $consultation->getId()->is($consultationId);
         });
     }
 }
