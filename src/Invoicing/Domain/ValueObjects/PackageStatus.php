@@ -4,7 +4,7 @@ namespace BestInvestments\Invoicing\Domain\ValueObjects;
 
 use DateInterval;
 use DateTimeImmutable;
-use RuntimeException;
+use InvalidArgumentException;
 
 class PackageStatus
 {
@@ -18,7 +18,7 @@ class PackageStatus
     public function __construct(string $status)
     {
         if (!in_array($status, [self::STARTED, self::EXPIRED, self::NOT_STARTED], true)) {
-            throw new RuntimeException("Invalid status {$status}");
+            throw new InvalidArgumentException("Invalid status {$status}");
         }
 
         $this->status = $status;
