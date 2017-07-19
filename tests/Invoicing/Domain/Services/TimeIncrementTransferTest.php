@@ -46,4 +46,3 @@ class TimeIncrementTransferTest extends \PHPUnit_Framework_TestCase
         $service->transferAvailableTime($oldPackageReference, $newPackageReference);
     }
 }
-

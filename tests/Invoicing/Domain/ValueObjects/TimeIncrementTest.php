@@ -50,7 +50,7 @@ class TimeIncrementTest extends \PHPUnit_Framework_TestCase
             [45, 3],
             [50, 4],
             [60, 4],
-            [120, 8]
+            [120, 8],
         ];
     }
 
@@ -89,7 +89,7 @@ class TimeIncrementTest extends \PHPUnit_Framework_TestCase
     public function testGetMinutes()
     {
         // Arrange
-        $expected = 45;
+        $expected      = 45;
         $timeIncrement = new TimeIncrement($expected);
 
         // Act

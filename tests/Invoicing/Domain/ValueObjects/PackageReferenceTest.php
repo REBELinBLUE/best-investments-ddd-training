@@ -27,7 +27,7 @@ class PackageReferenceTest extends \PHPUnit_Framework_TestCase
     public function testGetStartDate()
     {
         // Arrange
-        $expected = new DateTimeImmutable('2017-05-01');
+        $expected  = new DateTimeImmutable('2017-05-01');
         $reference = new PackageReference('gold', $expected, PackageLength::sixMonths());
 
         // Act
@@ -40,7 +40,7 @@ class PackageReferenceTest extends \PHPUnit_Framework_TestCase
     public function testGetLength()
     {
         // Arrange
-        $expected = PackageLength::sixMonths();
+        $expected  = PackageLength::sixMonths();
         $reference = new PackageReference('gold', new DateTimeImmutable('2017-05-01'), $expected);
 
         // Act
