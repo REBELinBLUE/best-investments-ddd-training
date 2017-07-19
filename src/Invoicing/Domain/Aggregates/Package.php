@@ -59,6 +59,7 @@ class Package
             throw new RuntimeException('The consultation does not belong to the same client as the package');
         }
 
+        // FIXME: Not sure this is right, should be increments not minutes?
         if ($consultation->getDuration()->isMoreThan($this->getRemainingHours())) {
             throw new RuntimeException('The consultation has a longer duration than is remaining on the package');
         }
@@ -83,7 +84,7 @@ class Package
             throw new RuntimeException('You can not transfer time into a package which has already started');
         }
 
-        if ($transfer->isForClient($this->clientId)) {
+        if (!$transfer->isForClient($this->clientId)) {
             throw new RuntimeException('You can not transfer time into a package for a different client');
         }
 
