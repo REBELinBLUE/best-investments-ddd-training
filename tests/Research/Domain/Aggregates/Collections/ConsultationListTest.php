@@ -4,6 +4,7 @@ namespace BestInvestments\Tests\Research\Domain\Aggregates\Collections;
 
 use BestInvestments\Research\Domain\Aggregates\Collections\ConsultationList;
 use BestInvestments\Research\Domain\Entities\Consultation;
+use BestInvestments\Research\Domain\ValueObjects\ConsultationIdentifier;
 use BestInvestments\Research\Domain\ValueObjects\SpecialistIdentifier;
 use BestInvestments\Tests\PrivatePropertyTrait;
 use DateTimeImmutable;
@@ -101,7 +102,34 @@ class ConsultationListTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($result);
     }
 
-    // FIXEM: testGet
+    public function testGet()
+    {
+        // Arrange
+        $expected       = $this->getConsultation();
+        $consultationId = $expected->getId();
+
+        $consultationList = new ConsultationList();
+        $consultationList->add($expected);
+
+        // Act
+        $actual = $consultationList->get($consultationId);
+
+        // Assert
+        $this->assertSame($expected, $actual);
+    }
+
+    public function testGetReturnsNullIfThereIsNoConsultationWithTheId()
+    {
+        // Arrange
+        $consultationList = new ConsultationList();
+        $consultationList->add($this->getConsultation());
+
+        // Act
+        $result = $consultationList->get(new ConsultationIdentifier('consultation-5432'));
+
+        // Assert
+        $this->assertNull($result);
+    }
 
     private function getConsultation(): Consultation
     {
